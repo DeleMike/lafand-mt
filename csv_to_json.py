@@ -15,22 +15,23 @@ def export_json_files(output_dir, filename, df, direction='en-sw'):
     src_lang, tgt_lang = direction.split('-')
     N_sent = df.shape[0]
     for s in range(N_sent):
-        text_string = {"translation": {src_lang:src_data[s], tgt_lang:tgt_data[s]}}
+        text_string = {"translation": {src_lang:str(src_data[s]), tgt_lang:str(tgt_data[s])}}
         to_be_saved.append(text_string)
 
-    with jsonlines.open(output_dir+filename, 'w') as writer:
+    with jsonlines.open(os.path.join(output_dir, filename), 'w') as writer:
         writer.write_all(to_be_saved)
 
 
 def combine_texts_lafand(input_path, output_path, direction='en-sw', n_sent=50000):
 
-    df_train = pd.read_csv(input_path + 'train.tsv', sep='\t') #[For CSV, use sep=',']
+    df_train = pd.read_csv(input_path + 'mix.tsv', sep='\t') #[For CSV, use sep=',']
     df_dev = pd.read_csv(input_path + 'dev.tsv', sep='\t')
     df_test = pd.read_csv(input_path + 'test.tsv', sep='\t')
 
-    sc_train, tg_train = df_train.iloc[:n_sent, 0].values, df_train.iloc[:n_sent, 1].values
-    sc_dev, tg_dev = df_dev.iloc[:, 0].values, df_dev.iloc[:, 1].values
-    sc_test, tg_test = df_test.iloc[:, 0].values, df_test.iloc[:, 1].values
+    sc_train, tg_train = df_train.iloc[:n_sent, 1].values, df_train.iloc[:n_sent, 0].values
+    sc_dev, tg_dev = df_dev.iloc[:, 1].values, df_dev.iloc[:, 0].values
+    # print(f'sc_dev = {sc_dev} and tc_dev = {tg_dev}')
+    sc_test, tg_test = df_test.iloc[:, 1].values, df_test.iloc[:, 0].values
 
     df_train_sctg = pd.DataFrame(sc_train, columns=['source_lang'])
     df_train_sctg['target_lang'] = tg_train
@@ -47,7 +48,7 @@ def combine_texts_lafand(input_path, output_path, direction='en-sw', n_sent=5000
     output_dir = output_path
     create_dir(output_dir)
 
-    export_json_files(output_dir, 'train.json', df_train_sctg, direction=direction)
+    export_json_files(output_dir, 'mix_train.json', df_train_sctg, direction=direction)
     export_json_files(output_dir, 'dev.json', df_dev_sctg, direction=direction)
     export_json_files(output_dir, 'test.json', df_test_sctg, direction=direction)
 
@@ -56,6 +57,6 @@ def combine_texts_lafand(input_path, output_path, direction='en-sw', n_sent=5000
 
 
 if __name__ == "__main__":
-    input_path = '../lafand_mt/data/news_domain_sent_level/eng_to_yor/' # [REPLACE with path/directory to the CSV/TSV]
-    output_path = 'data/json_files/en_yo_lafand/' # [REPLACE with output directory to the CSV/TSV]
-    combine_texts_lafand(input_path, output_path, direction='en-sw')  # replace direction with whatever translation direction
+    input_path = '/mnt/disk/makindele/data_prep_eng/data_prep_eng/output_data/' # [REPLACE with path/directory to the CSV/TSV]
+    output_path = '/mnt/disk/makindele/data_prep_eng/data_prep_eng/output_data/' # [REPLACE with output directory to the CSV/TSV]
+    combine_texts_lafand(input_path, output_path, direction='unyo-dcyo')  # replace direction with whatever translation direction
