@@ -24,8 +24,8 @@ def export_json_files(output_dir, filename, df, direction='en-sw'):
 
 def combine_texts_lafand(input_path, output_path, direction='en-sw', n_sent=50000):
 
-    df_train = pd.read_csv(input_path + 'mix.tsv', sep='\t') #[For CSV, use sep=',']
-    df_dev = pd.read_csv(input_path + 'dev.tsv', sep='\t')
+    df_train = pd.read_csv(input_path + 'no_accents_only_train.tsv', sep='\t') #[For CSV, use sep=',']
+    df_dev = pd.read_csv(input_path + 'dev_with_no_accents.tsv', sep='\t')
     df_test = pd.read_csv(input_path + 'test.tsv', sep='\t')
 
     sc_train, tg_train = df_train.iloc[:n_sent, 1].values, df_train.iloc[:n_sent, 0].values
@@ -48,8 +48,8 @@ def combine_texts_lafand(input_path, output_path, direction='en-sw', n_sent=5000
     output_dir = output_path
     create_dir(output_dir)
 
-    export_json_files(output_dir, 'mix_train.json', df_train_sctg, direction=direction)
-    export_json_files(output_dir, 'dev.json', df_dev_sctg, direction=direction)
+    export_json_files(output_dir, 'no_accents_only_train.json', df_train_sctg, direction=direction)
+    export_json_files(output_dir, 'dev_with_no_accents.json', df_dev_sctg, direction=direction)
     export_json_files(output_dir, 'test.json', df_test_sctg, direction=direction)
 
 
