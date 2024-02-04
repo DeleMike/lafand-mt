@@ -9,9 +9,9 @@ from diacritize_t5_small import (diacritize)
 app = Flask(__name__)
 
 @app.route('/diacritize', methods=['GET', 'POST'])
-def hello_world():
+def add_diacritics():
     '''
-    Returns a JSON test message
+    Returns a JSON that returns diacritized Yorùbá text
     '''
     output = ''
     if request.method == 'POST':
