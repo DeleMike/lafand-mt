@@ -9,3 +9,9 @@ afriteva_v2_base_unyo_dcyo_mix_dev/
 afriteva_v2_large_unyo_dcyo_mix_dev/
 oyto_t5_small_onnx/
 quantized_oyto_t5_small_onnx/
+oyo_t5_base_mix_onnx
+quantized_oyo_t5_base_mix_onnx/
+afriteva_v2_large_unyo_dcyo_mix_onnx
+quantized_afriteva_v2_large_unyo_dcyo_mix_onnx/
+oyot5_base_unyo_dcyo_no_accents_and_underdots_menyo/
+oyot5_base_unyo_dcyo_no_accents_only_menyo/
