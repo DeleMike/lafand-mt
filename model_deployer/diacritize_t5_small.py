@@ -5,23 +5,23 @@ import onnxruntime
 
 def diacritize(text=''):
     # Load encoder model
-    encoder_session = onnxruntime.InferenceSession('quantized_oyto_t5_small_onnx/encoder_model_quantized.onnx')
+    encoder_session = onnxruntime.InferenceSession('../quantized_oyto_t5_small_onnx/encoder_model_quantized.onnx')
 
     # Load decoder model
-    decoder_session = onnxruntime.InferenceSession('quantized_oyto_t5_small_onnx/decoder_model_quantized.onnx')
+    decoder_session = onnxruntime.InferenceSession('../quantized_oyto_t5_small_onnx/decoder_model_quantized.onnx')
 
-    model_id = "quantized_oyto_t5_small_onnx"
+    model_id = "../quantized_oyto_t5_small_onnx"
     tokenizer = AutoTokenizer.from_pretrained(model_id)
 
-    config = PretrainedConfig.from_json_file('quantized_oyto_t5_small_onnx/config.json')
+    config = PretrainedConfig.from_json_file('../quantized_oyto_t5_small_onnx/config.json')
 
     # initialise model
     model = ORTModelForSeq2SeqLM(
         config=config,
-        onnx_paths=['quantized_oyto_t5_small_onnx/decoder_model_quantized.onnx','quantized_oyto_t5_small_onnx/encoder_model_quantized.onnx'],
+        onnx_paths=['../quantized_oyto_t5_small_onnx/decoder_model_quantized.onnx','../quantized_oyto_t5_small_onnx/encoder_model_quantized.onnx'],
         encoder_session=encoder_session, 
         decoder_session=decoder_session, 
-        model_save_dir='quantized_oyto_t5_small_onnx',
+        model_save_dir='../quantized_oyto_t5_small_onnx',
         use_cache=False, 
     )
 
