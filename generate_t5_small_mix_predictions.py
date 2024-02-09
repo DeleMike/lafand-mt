@@ -64,7 +64,7 @@ def run_model_on_undiacritised_file():
     diacritized_sentences = []
     count = 0
     
-    for sentence in yoruba_sentences[:43]:
+    for sentence in yoruba_sentences:
         print('Currently processing  = ', sentence)
         diacritised_output = diacritize(text=sentence)
         diacritized_sentences.append(diacritised_output)
