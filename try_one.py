@@ -34,18 +34,23 @@ def diacritize(texts=[]):
     model = ORTModelForSeq2SeqLM(
         config=config,
         onnx_paths=['quantized_oyto_t5_small_onnx/decoder_model_quantized.onnx','quantized_oyto_t5_small_onnx/encoder_model_quantized.onnx'],
-        encoder_session=encoder_session, 
+        encoder_session=encoder_session,
         decoder_session=decoder_session, 
         model_save_dir='quantized_oyto_t5_small_onnx',
         use_cache=False, 
     )
     
-    inputs = tokenizer(texts, return_tensors="pt")
+    inputs = tokenizer(texts, return_tensors="pt", padding=True, truncation=True)
     
-    gen_tokens = model.generate(**inputs, use_cache=True)
+    gen_tokens = model.generate(**inputs, use_cache=True, max_new_tokens=100000)
     outputs = tokenizer.batch_decode(gen_tokens, skip_special_tokens=True)
-    print(outputs)
     
+    # Write outputs to file
+    with open("/mnt/disk/makindele/lafand-mt/diacritse_output.txt", "w", encoding="utf-8") as output_file:
+        for text in outputs:
+            output_file.write(text + "\n")
+    
+    print("Outputs written to file: diacritse_output.txt")
     return outputs
 
    
@@ -61,5 +66,5 @@ def diacritize(texts=[]):
 # output = diacritize(text=text)
 # print(f'Result of translation is = {output}')
 
-# absolute_path = Path('/mnt/disk/makindele/data_prep_eng/data_prep_eng/output_data/test_with_no_diacritics.txt').resolve()
-# diacritize(texts=_extract_yoruba_sentences(file_path=absolute_path)[:20])
+absolute_path = Path('/mnt/disk/makindele/data_prep_eng/data_prep_eng/output_data/test_with_no_diacritics.txt').resolve()
+diacritize(texts=_extract_yoruba_sentences(file_path=absolute_path)[:])
