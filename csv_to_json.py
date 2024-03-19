@@ -24,7 +24,7 @@ def export_json_files(output_dir, filename, df, direction='en-sw'):
 
 def combine_texts_lafand(input_path, output_path, direction='en-sw', n_sent=600000):
 
-    df_train = pd.read_csv(input_path + 'yoruba_bible_data/yoruba_bible_test.tsv', sep='\t') #[For CSV, use sep=',']
+    df_train = pd.read_csv(input_path + 'yoruba_bible_data/new_yoruba_bible_train_2.tsv', sep='\t') #[For CSV, use sep=',']
     df_dev = pd.read_csv(input_path + 'dev.tsv', sep='\t')
     df_test = pd.read_csv(input_path + 'test.tsv', sep='\t')
 
@@ -48,7 +48,7 @@ def combine_texts_lafand(input_path, output_path, direction='en-sw', n_sent=6000
     output_dir = output_path
     create_dir(output_dir)
 
-    export_json_files(output_dir, 'yoruba_bible_data/yoruba_bible_test.json', df_train_sctg, direction=direction)
+    export_json_files(output_dir, 'yoruba_bible_data/new_yoruba_bible_train_2.json', df_train_sctg, direction=direction)
     export_json_files(output_dir, 'dev.json', df_dev_sctg, direction=direction)
     export_json_files(output_dir, 'test.json', df_test_sctg, direction=direction)
 
